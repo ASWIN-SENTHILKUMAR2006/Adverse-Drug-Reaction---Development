@@ -1,0 +1,10 @@
+flask
+xgboost
+scikit-learn
+numpy
+pandas
+gensim
+joblib
+spacy
+scispacy
+# you already have the scispaCy model; if not, install it separately

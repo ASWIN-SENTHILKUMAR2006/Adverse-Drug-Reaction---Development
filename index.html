@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ADR Risk Predictor</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+  <link href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    .mic-btn {
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+    .mic-btn.listening {
+      background: red;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,0,0,0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255,0,0,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Adverse Drug Reaction (ADR) Risk Predictor</h1>
+    <form method="post">
+      <div style="display:flex; align-items:center;">
+        <textarea id="text-input" name="text" rows="5" placeholder="Type or speak patient/drug text here...">{{ text_input }}</textarea>
+        <button type="button" id="mic-btn" class="mic-btn"> <i class="fa-solid fa-microphone" style="color: #FFD43B;"></i></button>
+      </div>
+      <button type="submit">Predict</button>
+    </form>
+    <br>
+<form method="post" enctype="multipart/form-data">
+    <label>Upload structured CSV:</label>
+    <input type="file" name="file" accept=".csv"/>
+    <br>
+    <button type="submit">Predict Structured Data</button>
+</form>
+
+    {% if result %}
+      <div class="card">
+        <h2>Result</h2>
+        <p><strong>Label:</strong>
+          <span class="pill {{ 'bad' if result.label == 1 else 'good' }}">
+            {{ result.label_text }}
+          </span>
+        </p>
+        <p><strong>Probability:</strong> {{ '%.4f'|format(result.probability) }}</p>
+        <p><strong>Decision threshold:</strong> {{ result.threshold }}</p>
+
+        {% if result.entities and result.entities|length > 0 %}
+          <h3>Detected Entities</h3>
+          <ul>
+            {% for e in result.entities %}
+              <li><code>{{ e.text }}</code> — <em>{{ e.label }}</em></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if result.symptom_hits and result.symptom_hits|length > 0 %}
+          <h3>Symptom Lexicon Hits</h3>
+          <p>{{ result.symptom_hits|join(', ') }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    
+
+  <script>
+    const micBtn = document.getElementById("mic-btn");
+    const textInput = document.getElementById("text-input");
+
+    let recognition;
+    if ("webkitSpeechRecognition" in window) {
+      recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = "en-US";
+
+      recognition.onstart = () => {
+        micBtn.classList.add("listening");
+      };
+      recognition.onend = () => {
+        micBtn.classList.remove("listening");
+      };
+      recognition.onresult = (event) => {
+        let transcript = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        textInput.value = (textInput.value + " " + transcript).trim();
+      };
+
+      micBtn.addEventListener("click", () => {
+        recognition.start();
+      });
+    } else {
+      micBtn.disabled = true;
+      micBtn.title = "Speech recognition not supported in this browser.";
+    }
+  </script>
+
+  {% if result_file %}
+  <div class="card">
+    <h2>Structured Data Predictions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Age</th><th>Gender</th><th>Drug</th><th>Effects</th><th>Probability</th><th>Label</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in result_file %}
+          <tr>
+            <td>{{ r.row }}</td>
+            <td>{{ r.age }}</td>
+            <td>{{ r.gender }}</td>
+            <td>{{ r.drug }}</td>
+            <td>{{ r.effects }}</td>
+            <td>{{ '%.4f'|format(r.probability) }}</td>
+            <td>{{ 'ADR likely' if r.label==1 else 'ADR unlikely' }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endif %}
+
+ <div class="note" id="project-footer">
+      <p><strong>Note:</strong> This tool is an academic project  developed by Team - Aswin Senthilkumar , Arul Murugan , Bhavanithi .</p>
+   
+    </div>
+  
+</body>
+</html>

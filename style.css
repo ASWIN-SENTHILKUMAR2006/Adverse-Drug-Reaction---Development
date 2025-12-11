@@ -1,0 +1,54 @@
+* { box-sizing: border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+body { margin: 0; background: #0f172a; color: #e2e8f0; }
+.container { max-width: 900px; margin: 40px auto; padding: 16px; }
+h1 { margin-bottom: 16px; }
+form textarea {
+  width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #334155;
+  outline: none; background: #0b1220; color: #e2e8f0; resize: vertical;
+}
+form button {
+  margin-top: 12px; padding: 10px 16px; border: 0; border-radius: 10px;
+  background: #22c55e; color: #0b1220; cursor: pointer; font-weight: 700;
+}
+.card {
+  background: #0b1220; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-top: 18px;
+}
+.pill {
+  padding: 4px 8px; border-radius: 999px; font-weight: 700;
+}
+.pill.good { background: #10b98133; color: #34d399; border: 1px solid #065f46; }
+.pill.bad  { background: #ef444433; color: #f87171; border: 1px solid #7f1d1d; }
+.note { margin-top: 18px; font-size: 14px; color: #94a3b8; }
+code { background: #111827; padding: 2px 6px; border-radius: 6px; }
+#project-footer {
+    /* 1. Positioning */
+    position: fixed; /* Makes the element stay in place relative to the viewport */
+    bottom: 0;       /* Locks it to the bottom edge */
+    left: 0;         /* Starts it from the left edge */
+    width: 100%;     /* Makes it span the full width of the screen */
+
+    /* 2. Appearance & Layering */
+    background-color: #333; /* Dark background for visibility */
+    color: white;           /* White text */
+    padding: 10px 0;        /* Vertical padding */
+    text-align: center;     /* Center the text */
+    z-index: 1000;          /* Ensures it sits above all other content */
+
+    /* 3. Optional: Font & Border */
+    font-size: 0.9em;
+    border-top: 1px solid #444; /* Subtle line at the top */
+}
+
+/* Style the paragraph inside to remove default margins */
+#project-footer {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 0.9em;
+  border-top: 1px solid #444;
+  margin-top: 20px; /* ensures spacing above */
+}
+#project-footer {
+  background-color: #1e293b; /* lighter navy */
+}
