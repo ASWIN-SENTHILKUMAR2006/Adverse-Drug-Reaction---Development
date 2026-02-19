@@ -26,7 +26,7 @@ conda create -n healthcare_ml python=3.10 -y
 conda activate healthcare_ml
 pip install numpy==1.26.4
 pip install pandas==2.2.2
-pip install scikit-learn==1.4.2
+pip install scikit-learn==1.5.1
 pip install joblib==1.4.2
 pip install xgboost==2.0.3
 pip install gensim==4.3.2
@@ -37,3 +37,4 @@ pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/e
 
 
 
+    
