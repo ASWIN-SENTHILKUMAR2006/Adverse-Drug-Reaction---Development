@@ -1,4 +1,5 @@
 flask
+
 xgboost
 scikit-learn
 numpy
@@ -8,3 +9,31 @@ joblib
 spacy
 scispacy
 # you already have the scispaCy model; if not, install it separately
+#pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
+#pip install flask xgboost scikit-learn numpy pandas gensim joblib spacy scispacy
+#pip install xgboost
+#pip install gensim
+#pip install spacy==3.8.1 xgboost --prefer-binary
+#pip install scispacy --no-depspip install xgboost==2.0.3
+
+
+
+conda init powershell
+
+
+python --version
+conda create -n healthcare_ml python=3.10 -y
+conda activate healthcare_ml
+pip install numpy==1.26.4
+pip install pandas==2.2.2
+pip install scikit-learn==1.4.2
+pip install joblib==1.4.2
+pip install xgboost==2.0.3
+pip install gensim==4.3.2
+pip install flask==3.0.3
+pip install spacy==3.7.4
+pip install scispacy==0.5.4
+pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
+
+
+
